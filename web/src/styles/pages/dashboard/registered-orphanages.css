@@ -1,0 +1,22 @@
+#page-registered-orphanages {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+#page-registered-orphanages main {
+  flex: 1;
+  padding: 48px 48px 0px 168px;
+}
+
+#page-registered-orphanages header {
+  color: #5c8599;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+#page-registered-orphanages h1 {
+  font-size: 34px;
+  padding-bottom: 36px;
+}

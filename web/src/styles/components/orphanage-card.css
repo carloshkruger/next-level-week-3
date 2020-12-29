@@ -1,0 +1,40 @@
+.orphanage-card-list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.orphanage-card-list .orphanage-card {
+  width: 100%;
+  padding: 8px;
+}
+
+.orphanage-card-list .orphanage-card .footer {
+  background-color: #fff;
+  padding: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.orphanage-card-list .orphanage-card .footer .buttons-container a {
+  padding: 0px 8px;
+}
+
+.orphanage-card-list .orphanage-card .footer strong {
+  color: #5c8599;
+}
+
+@media (min-width: 768px) {
+  .orphanage-card-list {
+    flex-direction: row;
+  }
+
+  .orphanage-card-list .orphanage-card {
+    width: 48%;
+  }
+
+  .orphanage-card-list .orphanage-card .footer {
+    padding: 16px;
+  }
+}

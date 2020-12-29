@@ -6,10 +6,14 @@ import * as Yup from 'yup';
 
 export default {
   async index(request: Request, response: Response) {
+    const { approved = 'true' } = request.query;
     const repository = getRepository(Orphanage);
 
     const orphanages = await repository.find({
       relations: ['images'],
+      where: {
+        approved: approved === 'true',
+      },
     });
 
     return response.status(200).json(OrphanageView.renderMany(orphanages));
@@ -55,6 +59,7 @@ export default {
       opening_hours,
       open_on_weekends: open_on_weekends === 'true',
       images,
+      approved: false,
     };
 
     const schema = Yup.object().shape({
@@ -80,6 +85,28 @@ export default {
 
     await repository.save(orphanage);
 
-    return response.status(201).json(orphanage);
+    return response.status(201).json(OrphanageView.render(orphanage));
+  },
+
+  async delete(request: Request, response: Response) {
+    const id = Number(request.params.id);
+
+    const repository = getRepository(Orphanage);
+
+    const orphanage = repository.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!orphanage) {
+      return response.status(400).json({ message: 'Orfanato não encontrado.' });
+    }
+
+    await repository.delete({
+      id,
+    });
+
+    return response.status(200).send();
   },
 };

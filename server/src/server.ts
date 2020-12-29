@@ -6,11 +6,13 @@ import cors from 'cors';
 
 import './database/connection';
 import errorHandler from './errors/handler';
+import { authenticate } from './middlewares/authenticate';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(authenticate);
 app.use(routes);
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 app.use(errorHandler);

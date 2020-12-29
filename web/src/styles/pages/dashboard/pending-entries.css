@@ -1,0 +1,22 @@
+#page-pending-entries {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+#page-pending-entries main {
+  flex: 1;
+  padding: 48px 48px 0px 168px;
+}
+
+#page-pending-entries header {
+  color: #5c8599;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+#page-pending-entriesh1 {
+  font-size: 34px;
+  padding-bottom: 36px;
+}

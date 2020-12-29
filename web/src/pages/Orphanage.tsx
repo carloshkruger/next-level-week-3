@@ -11,7 +11,8 @@ import mapIcon from '../utils/mapIcon';
 import '../styles/pages/orphanage.css';
 import api from '../services/api';
 
-interface OrphanageProps {
+export interface OrphanageProps {
+  id: number;
   name: string;
   about: string;
   latitude: number;
