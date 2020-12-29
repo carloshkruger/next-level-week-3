@@ -6,37 +6,48 @@ import { RectButton } from 'react-native-gesture-handler';
 import MapView, { MapEvent, Marker } from 'react-native-maps';
 
 import mapMarkerImg from '../../images/map-marker.png';
+import { useDeviceLocation } from '../../hooks/useDeviceLocation';
 
 export default function SelectMapPosition() {
   const navigation = useNavigation();
-  const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
+  const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
+
+  const { location: deviceLocation } = useDeviceLocation();
 
   function handleSelectMapPosition(event: MapEvent) {
-    setPosition(event.nativeEvent.coordinate);
+    setLocation(event.nativeEvent.coordinate);
   }
 
   function handleNextStep() {
-    navigation.navigate('OrphanageData', { position });
+    navigation.navigate('OrphanageData', { position: location });
+  }
+
+  if (deviceLocation.latitude === 0) {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Buscando sua localização...</Text>
+      </View>
+    );
   }
 
   return (
     <View style={styles.container}>
       <MapView
         initialRegion={{
-          latitude: -27.2092052,
-          longitude: -49.6401092,
+          latitude: deviceLocation.latitude,
+          longitude: deviceLocation.longitude,
           latitudeDelta: 0.008,
           longitudeDelta: 0.008,
         }}
         onPress={handleSelectMapPosition}
         style={styles.mapStyle}
       >
-        {!!position.latitude && (
-          <Marker icon={mapMarkerImg} coordinate={position} />
+        {!!location.latitude && (
+          <Marker icon={mapMarkerImg} coordinate={location} />
         )}
       </MapView>
 
-      {!!position.latitude && (
+      {!!location.latitude && (
         <RectButton style={styles.nextButton} onPress={handleNextStep}>
           <Text style={styles.nextButtonText}>Próximo</Text>
         </RectButton>

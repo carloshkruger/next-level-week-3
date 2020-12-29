@@ -7,6 +7,7 @@ import OrphanageDetails from './pages/OrphanageDetails';
 import OrphanageData from './pages/CreateOrphanage/OrphanageData';
 import SelectMapPosition from './pages/CreateOrphanage/SelectMapPosition';
 import { Header } from './components/Header';
+import Welcome from './pages/Welcome';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -21,6 +22,7 @@ export default function Routes() {
           },
         }}
       >
+        <Screen name="Welcome" component={Welcome} />
         <Screen name="OrphanagesMap" component={OrphanagesMap} />
         <Screen
           name="OrphanageDetails"

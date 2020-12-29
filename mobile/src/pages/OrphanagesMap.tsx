@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Dimensions, Text } from 'react-native';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Feather } from '@expo/vector-icons';
@@ -7,6 +7,7 @@ import { RectButton } from 'react-native-gesture-handler';
 
 import mapMarker from '../images/map-marker.png';
 import api from '../services/api';
+import { useDeviceLocation } from '../hooks/useDeviceLocation';
 
 interface Orphanage {
   id: number;
@@ -20,6 +21,8 @@ const OrphanagesMap: React.FC = () => {
 
   const { navigate } = useNavigation();
 
+  const { location } = useDeviceLocation();
+
   useFocusEffect(() => {
     api.get('orphanages').then((response) => setOrphanages(response.data));
   });
@@ -32,14 +35,22 @@ const OrphanagesMap: React.FC = () => {
     navigate('SelectMapPosition');
   }
 
+  if (location.latitude === 0) {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Buscando sua localização...</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
-          latitude: -27.2057496,
-          longitude: -49.6582354,
+          latitude: location.latitude,
+          longitude: location.longitude,
           latitudeDelta: 0.008,
           longitudeDelta: 0.008,
         }}
